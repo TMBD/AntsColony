@@ -1,0 +1,85 @@
+.bordered{
+    border: 1px solid black;
+}
+
+#svgField{
+    border: 3px solid rgb(5, 4, 10);
+    background-color: rgba(170, 226, 247, 0.856);
+    position: absolute;
+    width: 45em; 
+    height: 30em;
+    top: 0px;
+    left: 0px;
+    cursor: copy;
+    z-index: 2;
+    
+
+}
+
+#field{
+    border: 3px solid rgb(227, 243, 0);
+    background-color: rgba(130, 224, 248, 0.918);
+    position: absolute;
+    width: 45em; 
+    height: 30em;
+    /* margin: auto;
+    margin-top: 2em; */
+    top: 0px;
+    left: 0px;
+    cursor: copy;
+    z-index: 1;
+    
+
+}
+
+#fieldContainer{
+    height: 35em;
+    float: left;
+    width: 80%;
+    /* margin: 2px;
+    padding: 5px; */
+    align-content: center;
+    
+
+}
+
+.city{
+    width: 20px;
+    height: 20px;
+    background: rgb(0, 0, 0);
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    z-index: 5;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    /* left:725px;
+    top: 66px; */
+}
+
+
+
+
+#settingContainer{
+    float: right;
+    padding: 2px;
+    width: 15%;
+    border: 1px solid rgb(68, 6, 240);
+    background-color: rgb(199, 227, 236);
+    margin: auto;
+}
+
+.container{
+    height: 37em;
+    border: 1px solid rgb(250, 10, 10);
+    /* padding: 0.1em; */
+    
+}
+
+.line {
+    height: 1px;
+    background-color: rgb(245, 0, 0);
+    transform-origin: left center;
+    position: absolute;
+    z-index: 1;
+}
