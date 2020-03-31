@@ -10,16 +10,50 @@
 <body>
     
     <div class="container">
-        <div class="bordered" id="fieldContainer">
+        <div id="fieldContainer">
             <div id="field">
             </div>
         </div>
         <div id="settingContainer" class="">
-            <button id="launchBt">Launch</button>
+            <label for="antNumberInput">Nombre de fourmie</label><br/>
+            <input type="number" id="antNumberInput" class="settingInput" value="500"><br/>
+
+            <label for="iterNumberInput">Nombre d'itération</label><br/>
+            <input type="number" id="iterNumberInput" class="settingInput" value="1000"><br/><br/>
+
+            <label for="creatGraph">Construire le graphe</label>
+            <input type="radio" id="creatGraph" name="radioAction" value="creatGraph" checked><br/>
+
+            <label for="chooseStartCity">Choisir le point de départ</label>
+            <input type="radio" id="chooseStartCity" name="radioAction" value="chooseStartCity">
+                <div id='cityStartSample'></div> <br/>
+
+            <label for="chooseLastCity">Choisir le point d'arrivé</label>
+            <input type="radio" id="chooseLastCity" name="radioAction" value="chooseLastCity">
+                <div id='cityEndSample'></div><br/><br/>
+
+            <label for="notifyerCheckbox">Me notifier à chaque fois qu'un plus court chemin est trouvé</label>
+            <input type="checkbox" id="notifyerCheckbox"><br/><br/>
+
+            <label for="activeGeneAlgoCheckbox">Activer l'algortithme génétique</label>
+            <input type="checkbox" id="activeGeneAlgoCheckbox"><br/><br/>
+            <div id="iterGeneNumberDiv">
+                <label for="iterGeneNumberInput">Intervalle d'iteration avant lancement de l'algorithme génétique</label><br/>
+                <input type="number" id="iterGeneNumberInput" class="settingInput" value="100"><br/><br/>
+            </div>
+            
+
+            <div id="diplayCordinateDiv">
+                <b>
+                    X = 0 <br/>
+                    Y = 0
+                <b/>
+            </div><br/>
+
+            <button id="initBt">Créer la Civilisation</button><br/><br/>
+            <button id="launchBt" disabled>Lancer la recherche</button><br/><br/>
         </div>
-
     </div>
-
 
     <script src="./js/packages/jquery-3.4.1.js"></script>
     <script src="./js/Ant.js"></script>

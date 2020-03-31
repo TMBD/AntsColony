@@ -1,6 +1,6 @@
 
 class Ant {
-    constructor(parentThis, alpha, beta, gama) {
+    constructor(parentThis, alpha, beta, gama, antKey) {
         this.parentThis = parentThis;
         this.bringFood = false; //permet de savoir si la fourmie porte de la nourriture
         this.traveledRoadsKeys = []; //les cles de l'ensemble des routes traversées jusque là (pour le retour au nid) : pour l'aller j'ajoute la route a la fin de sa traversee
@@ -12,6 +12,7 @@ class Ant {
         this.beta = beta;
         this.gama = gama;
         this.lastCityVisitedKey = null;
+        this.AntKey = antKey
 
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -47,7 +48,7 @@ class Ant {
                 if(currentCityKey== parentThis.lastCityKey){ //si je suis a la derniere ville
                     this.restCurrentDistance = this.parentThis.roadsList[this.currentRoadKey]._length;
                     this.nbNestReached += 1;
-                    this.parentThis.updateBestPath(this.sumLengthCrossedRoad, this.traveledRoadsKeys); //!
+                    this.parentThis.updateBestPath(this.sumLengthCrossedRoad, this.traveledRoadsKeys, this.AntKey); //!
                     this.bringFood = true;
                     this.lastCityVisitedKey = currentCityKey;
 
@@ -73,7 +74,7 @@ class Ant {
 
                 }
             }
-            console.log("");
+            //console.log("");
             return success;
             
         };
@@ -118,7 +119,7 @@ class Ant {
 
                 this.currentRoadKey = bestRoadKey; 
                 //this.sumLengthCrossedRoad += this.parentThis.roadsList[bestRoadKey]._length;
-                console.log("route emprunte : "+bestRoadKey);
+                //console.log("route emprunte : "+bestRoadKey);
                 //this.dropPheromone(); //!
                 return true;
             }else{
@@ -133,14 +134,14 @@ class Ant {
         this.dropPheromone = function () {
             //console.log("this.sumLengthCrossedRoad = "+ this.sumLengthCrossedRoad);
             this.parentThis.roadsList[this.currentRoadKey].pheromoneQte += 1/this.sumLengthCrossedRoad;
-            console.log("pheromone de la route "+this.currentRoadKey+" = "+this.parentThis.roadsList[this.currentRoadKey].pheromoneQte);
+            //console.log("pheromone de la route "+this.currentRoadKey+" = "+this.parentThis.roadsList[this.currentRoadKey].pheromoneQte);
             
         };
 
 ///////////////////////////////////////////////////////////////////////////////////
         this.getRoadId = function(parent, key) {
-            console.log(parent.roadsList);
-            console.log(key);
+            //console.log(parent.roadsList);
+            //console.log(key);
             return parent.roadsList[key].id;
             
         };
@@ -150,7 +151,7 @@ class Ant {
             var secondCityKeyOfCurrentRoad = this.parentThis.roadsList[this.currentRoadKey].secondCityKey;
             if(firstCityKeyOfCurrentRoad==this.lastCityVisitedKey) return secondCityKeyOfCurrentRoad;
             else if(secondCityKeyOfCurrentRoad==this.lastCityVisitedKey) return firstCityKeyOfCurrentRoad;
-            else console.log("error in function getCurrentCity");
+            else alert.log("error in function getCurrentCity");
         };
 
         this.removeTraveledRoads = function(roadsKeysList){

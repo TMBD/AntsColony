@@ -1,41 +1,28 @@
-.bordered{
-    border: 1px solid black;
-}
-
-#svgField{
-    border: 3px solid rgb(5, 4, 10);
-    background-color: rgba(170, 226, 247, 0.856);
-    position: absolute;
-    width: 45em; 
-    height: 30em;
-    top: 0px;
-    left: 0px;
-    cursor: copy;
-    z-index: 2;
-    
-
-}
 
 #field{
-    border: 3px solid rgb(227, 243, 0);
-    background-color: rgba(130, 224, 248, 0.918);
+    border: 1px solid rgb(68, 6, 240);
+    background-color: rgba(147, 233, 255, 0.671);;
     position: absolute;
-    width: 45em; 
-    height: 30em;
+    /* width: 45em; 
+    height: 30em;*/
+    width: 70%; 
+    height: 95%;
     /* margin: auto;
     margin-top: 2em; */
     top: 0px;
     left: 0px;
     cursor: copy;
     z-index: 1;
+    box-shadow: 12px 12px 2px 1px rgba(1, 1, 107, 0.185);
+    border-radius: 5px;
     
 
 }
 
 #fieldContainer{
-    height: 35em;
+    height: 100%;
     float: left;
-    width: 80%;
+    width: 70%;
     /* margin: 2px;
     padding: 5px; */
     align-content: center;
@@ -58,20 +45,37 @@
 }
 
 
+#cityStartSample{
+    width: 15px;
+    height: 15px;
+    background: rgb(0, 134, 18);
+    border-radius: 50%;
+    float: right;
+}
+#cityEndSample{
+    width: 15px;
+    height: 15px;
+    background: rgb(255, 0, 0);
+    border-radius: 50%;
+    float: right;
+}
 
 
 #settingContainer{
     float: right;
-    padding: 2px;
-    width: 15%;
+    padding: 5px;
+    width: 25%;
+    height: 95%;
     border: 1px solid rgb(68, 6, 240);
     background-color: rgb(199, 227, 236);
-    margin: auto;
+    box-shadow: 12px 12px 2px 1px rgba(1, 1, 107, 0.185);
+    border-radius: 5px;
+    /* margin: auto; */
 }
 
 .container{
-    height: 37em;
-    border: 1px solid rgb(250, 10, 10);
+    height: 100%;
+    /* border: 1px solid rgb(250, 10, 10); */
     /* padding: 0.1em; */
     
 }
@@ -82,4 +86,33 @@
     transform-origin: left center;
     position: absolute;
     z-index: 1;
+}
+.settingInput{
+    width: 50%;
+}
+
+#diplayCordinateDiv{
+    color: rgb(7, 0, 66);
+    border: 1px solid rgb(68, 6, 240);
+    background-color: rgb(171, 233, 250);
+    width: 4em;
+}
+
+
+#launchBt{
+    background-color: rgb(0, 189, 16);
+    border-radius: 4px;
+}
+
+#initBt{
+    background-color: rgb(124, 213, 255);
+    border-radius: 4px;
+}
+
+#infos{
+    background-color: rgb(161, 225, 255);
+    margin: 5px;
+    padding: 3px;
+    border-radius: 3px;
+    border: 1px solid black;
 }
