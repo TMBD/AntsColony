@@ -116,3 +116,26 @@
     border-radius: 3px;
     border: 1px solid black;
 }
+
+#help-div{
+    margin: auto;
+    padding: 2px;
+    background-color: rgb(232, 254, 255);
+    width: fit-content;
+    border-radius: 3px;
+    border: black 1px solid;
+}
+
+#help-container{
+    border: blue 1px solid;
+    margin: auto;
+    padding: 2em;
+    background-color: rgb(236, 236, 236);
+    width: fit-content;
+    
+}
+
+#joke-div{
+    margin: auto;
+    width: fit-content;
+}

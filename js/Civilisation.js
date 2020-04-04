@@ -1,30 +1,34 @@
 
 class Civilisation {
     constructor(name) {
-        this.name = name;
-        this.citiesList = [];
-        this.roadsList = [];
-        this.antsList = [];
-        this.firstCityKey = null;
-        this.lastCityKey = null;
-        this.q0 = 0.8;
+        this.name = name; //le nom de la civilisation
+        this.citiesList = [];//la liste des villes de la civilisation
+        this.roadsList = []; //la liste des routes de la civilisation
+        this.antsList = []; //la liste des fourmis de la civilisation
+        this.firstCityKey = null; //la ville de départe de des fourmies
+        this.lastCityKey = null;//la ville de destination des fourmis(la ou se trouve la )
+        this.q0 = 0.8; 
         this.rho0 = 0.85;
-        this.bestPathLength = null;
-        this.bestRoadsListKey = null;
+        this.bestPathLength = null; //La longueure du meilleure chemin trouvé jusque la 
+        this.bestRoadsListKey = null; //la liste des routes qui fond partie du meilleurs chemin
         this.nbNestReached = 0; //juste pour savoir le nombre de fois qu'on est arrivé au noeud final
-        this.nbBestRoadUpdeted = 0;
-        this.runAlgoGene = false;
-        this.nbIterForAlgoGene = null;
-        this.bestAntKey = null;
+        this.nbBestRoadUpdeted = 0; //le nombre de fois qu'un plus cours chemin est trouvé
+        /////////////// attributs pour l'algo génétique
+        this.runAlgoGene = false; //permet de savoir si l'utilisateur a choisi de faire tourner l'algo génétique ou pas 
+        this.nbIterForAlgoGene = null; //permet de savoir au bout de combien d'itération on doit lancer l'algo génétique
+        this.bestAntKey = null; //la fourmi qui a trouvé le meilleur chemin actuel pour la crossOver
 
-        this.addCity = function(id, x, y){
+        //permet d'ajouter une ville dans la liste des villes
+        this.addCity = function(id, x, y){ 
             return -1+this.citiesList.push(new City(id, x, y));
         };
 
+        //permet d'ajouter une route
         this.addRoad = function(id, norme, firstCityKey, secondCityKey){
             return -1+this.roadsList.push(new Road(this, id, norme, firstCityKey, secondCityKey));
         };
 
+        //permet d'ajouter une fourmi
         this.addAnt = function(){
             var alpha = -5+10*Math.random();
             var beta = -5+10*Math.random();
@@ -33,6 +37,7 @@ class Civilisation {
             this.antsList.push(new Ant(this, alpha, beta, gama, antKey));
         };
 
+        //permet de creer la liste des fourmis
         this.initAnts = function(nbAnts){
             for(let i = 0; i<nbAnts; i++){
                 this.addAnt();
@@ -40,18 +45,14 @@ class Civilisation {
         };
 
 
+        //permet d'initialiser la valeur des pheromones des routes
         this.initPheromones = function(nbAnts){
-            //console.log(this);
-            //console.log("this.citiesList : "+this.citiesList);
-            for(let i = 0; i<this.roadsList.length; i++){
-                var firstCityKey = this.roadsList[i].firstCityKey;
-                var secondCityKey = this.roadsList[i].secondCityKey;
-                var firstListRoadsKeys = this.citiesList[firstCityKey].roadsKeysList;
-                var secondListRoadsKeys = this.citiesList[secondCityKey].roadsKeysList;
-                //console.log("firstCityKey : "+firstCityKey);
-                //console.log("secondCityKey : "+secondCityKey);
-                // console.log("firstListRoadsKeys : "+firstListRoadsKeys);
-                // console.log("secondListRoadsKeys : "+secondListRoadsKeys);
+            for(let i = 0; i<this.roadsList.length; i++){//On boucle sur toutes les routes
+                var firstCityKey = this.roadsList[i].firstCityKey;//Pour chaque route on cherche la 1e ville à la quelle elle est connecté
+                var secondCityKey = this.roadsList[i].secondCityKey;//on cherche la 2e ville à la quelle elle est connecté
+                var firstListRoadsKeys = this.citiesList[firstCityKey].roadsKeysList; //liste des routes avec lesquelles elle est connecté pas via la 1e route
+                var secondListRoadsKeys = this.citiesList[secondCityKey].roadsKeysList;//liste des routes avec lesquelles elle est connecté pas via la 1e route
+
                 var bestRoadLength = this.roadsList[firstListRoadsKeys[0]]._length;
 
                 for(let j = 1; j<firstListRoadsKeys.length; j++){
@@ -60,19 +61,16 @@ class Civilisation {
                 }
 
                 for(let j = 0; j<secondListRoadsKeys.length; j++){
-                    //console.log("j : "+j);
-                    //console.log("secondListRoadsKeys[j] : "+secondListRoadsKeys[j]);
                     if(bestRoadLength>this.roadsList[secondListRoadsKeys[j]]._length)
                         bestRoadLength = this.roadsList[secondListRoadsKeys[j]]._length;
                 }
 
                 this.roadsList[i].pheromoneQte = nbAnts/bestRoadLength;
-                //console.log("initPhero de la route "+i+" = "+this.roadsList[i].pheromoneQte);
-
             }
         };
 
 
+        //permet de de donner le coup d'envoi
         this.go = function () {
             for(let i = 0; i<this.antsList.length; i++){
                 this.antsList[i].lastCityVisitedKey = this.firstCityKey;
@@ -81,6 +79,7 @@ class Civilisation {
 
         };
 
+        //permet de faire un pas pour toutes les fourmis
         this.takeOneStep = function () {
             for(let i = 0; i<this.antsList.length; i++){
                 var success = this.antsList[i].moveForward();
@@ -89,11 +88,10 @@ class Civilisation {
             //console.log('takeOneStep');
 
         };
+
         ///////////////////////////////////////////
-        this.genetiqueSelection = function () {
-        };
 
-
+        //permet de mettre a jour le meilleur chemin a chaque fois qu'un fourmi arrive a la ville de destination
         this.updateBestPath = function (pathLength, roadsListKeys, antKey) {
             if(this.bestPathLength == null){
                 this.bestPathLength = pathLength;
@@ -118,6 +116,7 @@ class Civilisation {
         };
 
 
+        //permet de mettre en surbrillance le meilleur chemin trouvé a l'instant t
         this.highlightBestRoads = function(){
             for(var i = 0; i<this.roadsList.length; i++){
                 var currenRoadId = this.roadsList[i].id;
@@ -131,6 +130,7 @@ class Civilisation {
             }
         };
 
+        //permet d'effectuer la selection génétique
         this.algoGene = function(){
             console.log("running Algo gene");
             var antNumberForAlgoGene = parseInt(0.25*this.antsList.length, 10);
@@ -171,6 +171,7 @@ class Civilisation {
 
         };
 
+        //permet de chercher la fourmi la plus rapide pour le crossOver
         this.getTheFasterAntKey = function(){
             var fasterAntKey = 0;
             for(var i = 1; i<this.antsList.length; i++){

@@ -1,21 +1,23 @@
 
 class Ant {
     constructor(parentThis, alpha, beta, gama, antKey) {
-        this.parentThis = parentThis;
+        this.parentThis = parentThis; //Ceci designe la civilisation dans laquelle appartient la fourmi
         this.bringFood = false; //permet de savoir si la fourmie porte de la nourriture
         this.traveledRoadsKeys = []; //les cles de l'ensemble des routes traversées jusque là (pour le retour au nid) : pour l'aller j'ajoute la route a la fin de sa traversee
-        this.currentRoadKey = null;
+        this.currentRoadKey = null; //la cle de la route courante que la fourmi a emprunté
         this.restCurrentDistance = null; //la longueur restante de la route courante que la fourmie est entrain de traversée
         this.sumLengthCrossedRoad = 0; //somme des longueur des routes traversés jusque la (seulement pour le voyage courant)
         this.nbNestReached = 0; //le nombre de nid atteint
         this.alpha = alpha;
         this.beta = beta;
         this.gama = gama;
-        this.lastCityVisitedKey = null;
-        this.AntKey = antKey
+        this.lastCityVisitedKey = null; //la derniere ville visité par la fourmi
+        this.AntKey = antKey //la position de la fourmi dans la liste des fourmie de la civilisation 
 
 
 ///////////////////////////////////////////////////////////////////////////////////
+
+        //Permet aux fourmilles de se deplacer en avant d'un pas 
         this.moveForward = function () {
             var exitSuccess = true;
             if (this.restCurrentDistance>0) this.restCurrentDistance--;
@@ -38,6 +40,8 @@ class Ant {
 
 
 ///////////////////////////////////////////////////////////////////////////////////
+
+        //permet au fourmi de choisir une route lorsque la fourmi vient a bout du chemin courant
         this.chooseRoad = function () {
             var currentCityKey = this.getDestinationCityKey();
             var success = true;
@@ -74,13 +78,13 @@ class Ant {
 
                 }
             }
-            //console.log("");
             return success;
             
         };
 
         
 ///////////////////////////////////////////////////////////////////////////////////
+        //Permet de d'initialiser la recherche 
         this.startSearch = function () {
             this.traveledRoadsKeys = [];
             this.sumLengthCrossedRoad = 0;//!
@@ -91,6 +95,7 @@ class Ant {
 
 
 ///////////////////////////////////////////////////////////////////////////////////
+        //permet a la fourmi de sectionner une route en fonction de ses paramettre alpha beta et de la pheromone des routes possibles
         this.selectRoad = function(endCityKey) {
             var cityKey = endCityKey;
             var roadsKeysList = this.parentThis.citiesList[cityKey].roadsKeysList
@@ -117,12 +122,9 @@ class Ant {
                     }
                 }
 
-                this.currentRoadKey = bestRoadKey; 
-                //this.sumLengthCrossedRoad += this.parentThis.roadsList[bestRoadKey]._length;
-                //console.log("route emprunte : "+bestRoadKey);
-                //this.dropPheromone(); //!
+                this.currentRoadKey = bestRoadKey;
                 return true;
-            }else{
+            }else{//Certaines fourmies peuvent se perdre lors de la recherche
                 console.log("fourmie bloque dans une ville n'etant pas connecte a deux routes");
                 return false;
             } 
@@ -131,6 +133,7 @@ class Ant {
 
 
 ///////////////////////////////////////////////////////////////////////////////////
+        //Cette fontion permet de mettre a jour la pheromone d'une route lors qu'une fourmi la choisi
         this.dropPheromone = function () {
             //console.log("this.sumLengthCrossedRoad = "+ this.sumLengthCrossedRoad);
             this.parentThis.roadsList[this.currentRoadKey].pheromoneQte += 1/this.sumLengthCrossedRoad;
@@ -139,6 +142,7 @@ class Ant {
         };
 
 ///////////////////////////////////////////////////////////////////////////////////
+        //permet de retourner l'identifiant d'une route
         this.getRoadId = function(parent, key) {
             //console.log(parent.roadsList);
             //console.log(key);
@@ -146,6 +150,7 @@ class Ant {
             
         };
 
+        //Pertmet de renvoyer la liste des routes possible qu'une fourmi peut empruntée. elle est utilisé lors de l'appel a fonction selectRoad
         this.getDestinationCityKey = function(){
             var firstCityKeyOfCurrentRoad = this.parentThis.roadsList[this.currentRoadKey].firstCityKey;
             var secondCityKeyOfCurrentRoad = this.parentThis.roadsList[this.currentRoadKey].secondCityKey;
@@ -154,6 +159,7 @@ class Ant {
             else alert.log("error in function getCurrentCity");
         };
 
+        //Permet de supprimer la liste des chamins deja parcourus
         this.removeTraveledRoads = function(roadsKeysList){
             var goodRoadsKeysList = [];
             var indexOfCurrentRoadKey = roadsKeysList.indexOf(this.currentRoadKey);
