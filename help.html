@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./styles/global.css">
+    <title>Guide d'utilsation</title>
+</head>
+<body>
+
+    <div id="help-container">
+
+        <div id="help-div">
+            <a href="index.html">Retourner à la page d'accueil</a>
+        </div><br/>
+        <h3>Création des villes : </h3>
+        <ul style="list-style-type:disc;">
+           <li> Sélectionnez d'abord l'option <b>construire le graphe</b> dans le panel de gauche</li>
+           <li>Une fois cette option sélectionnée il vous suffit juste de cliquer sur le champs de gauche avec votre souris pour créer une ville à l'endroit souhaité</li>
+           <li>Vous avez la  possibilité de créer autant de ville que vous le souhaitez et n'importe où sur le champs de gauche</li>
+           <li>A tout moment lors de la création de des villes vous pouvez choisir la ville de départ (le nid des fourmis) et la ville de déstination (le lieu où se trouve la nourriture)</li>
+           <li>Pour choisir La ville de départ il vous suffit juste de sélectionner l'option <b>choisir le point de départ</b> dans le panel de droite puis de cliquer sur la ville que vous voulez choisir</li>
+           <li>Une fois cliqué sur la ville de départ que vous souhaitez celle-ci prend automatiquement une couleur verte pour la distinguer des autres villes</li>
+           <li>Pour choisir La ville de destination il vous suffit juste de sélectionner l'option <b>choisir le point d'arrivé</b> dans le panel de droite puis de cliquer sur la ville que vous voulez choisir</li>
+           <li>Une fois cliqué sur la ville de d'arrivée que vous souhaitez celle-ci prends automatiquement une couleur rouge pour la distinguer des autres villes</li>
+           <li>Vous avez la possibilité de changer la ville de départ ou la ville d'arrivée à tout moment</li>
+           <li>En construisant vos villes vous pouvez à tout moment créer des routes entre les villes, pour cela reférez-vous à l'étape suivante</li>
+        </ul>
+
+        <h3>Création des routes entres les villes : </h3>
+        <ul style="list-style-type:disc;">
+            <li>Pour créer une route entre deux villes vous devez devez sélectionner l'option <b>contruire le graphe</b> du panel de droite</li>
+            <li>Une fois l'option sélectionnée vous pouvez cliquer avec votre souris sur la première ville de la route que vous voulez créer</li>
+            <li>Apres avoir sélectionné la première ville celle-ci passe automatiquement en couleur grise claire pour la distinguer des autres villes</li>
+            <li>A ce stade vous pouvez, si vous le souhaitez, continuer à créer d'autres villes ou effectuer d'autres actions</li>
+            <li>Une fois que vous étes prêt à lier cette première ville sélectionnée à une deuxième ville pour créer une route, il vous suffit juste de cliquer sur la deuxième ville</li>
+            <li>Cette dernière action créera une ligne entre les deux villes qui symbolise la route</li>
+            <li>Une fois que la route est créée, la première ville qui était passée en couleur grise reprend automatiquement sa couleur noire d'origine</li>
+            <li>Si vous avez sélectionné la première ville par erreur par exemple et que vous souhaitez annuler la sélection, il vous souffit de cliquer encore sur elle</li>
+            <li>Dans ce cas elle reprendra automatiquement sa couleur noire d'origine pour indiquer que la sélection est annulée</li>
+            <li>Vous pouvez créer autant de route que vous le souhaitez pour construire votre graphe</li>
+         </ul>
+
+         <h3>Création de la civilisation : </h3>
+         <ul style="list-style-type:disc;">
+            <li>Avant de créer votre civilisation de fourmis un certain nombre d'options vous sont proposés</li>
+            <li>Vous pouvez choisir le nombre de fourmis à créer pour votre civilisation via le champs <b>nombre de fourmis</b> du panel de droite</li>
+            <li>Vous avez la possibilité d'indiquer le nombre d'itération à effectuer avant de vous donner le plus court chemin trouvé via le champs <b>nombre d'itération</b> du panel de droite</li>
+            <li>Vous pouvez choisir d'étre notifié à chaque fois qu'un plus court chemin est trouvé en sélectionnant l'option prévue à cet effet dans le panel de droite</li>
+            <li>Notez que si vous choisissez cette option, l'algorithme vous informera qu'un plus court chemin a été trouvé à chaque fois que cela se produit via la boîte de dialogue</li>
+            <li>Ce sera à vous de fermer la boîte de dialogue et de cliquer sur le bouton continuer la recherche pour continuer l'algorithme</li>
+            <li>L'autre option disponible est l'activation de la l'algorithme génétique.</li>
+            <li>Pour cela il vous faut juste de sélectionner l'option <b>activer l'algorithme génétique</b> dans le panel de droite</li>
+            <li>Une fois l'option sélectionnée un champs apparait automatiquement en bas pour vous demander de saisir l'intervalle d'itération avant le lancement de l'algorithme génétique</li>
+            <li>Cet algorithme génétique permet d'augmenter la diversité de la population de fourmis et donc d'accroitre les chances de trouver le plus court chemin de votre graphe.</li>
+            <li>Le revers de cette option reside sur le fait que l'algorithme prendra plus de temps pour la recherche</li>
+            <li>Une fois tous vos choix effectués, vous pouvez maintenant créer votre civilisation via le bouton <b>créer la civilisation</b> du panel de droite</li>
+            <li>Attention : Après la création de votre civilisation vous ne pourrez plus modifier votre graphe ni changer vos choix</li>
+         </ul>
+
+         <h3>Lancement de la recherche : </h3>
+         <ul style="list-style-type:disc;">
+            <li>Pour commencer la recherche il vous suffit juste de cliquer sur le bouton <b>Lancer la recherche</b> qui ne devient disponible qu'après avoir crée votre civilisation</li>
+         </ul>
+
+         <h3>Les resultats de la recherche : </h3>
+         <ul style="list-style-type:disc;">
+            <li>Une fois la recherche terminée le plus court chemin trouvé est mis en surbrillance sur votre graphe </li>
+            <li>En plus de cela un petit champs apparait en bas du panel de droite pour resumer les resultats de la recherche</li>
+            <li>Dans ce panel vous trouverez la longueur du plus court chemin trouvé (en se basant sur les coordonées des villes)</li>
+            <li>Vous y trouverez aussi le nombre de fourmis qui se sont perdus en cours de route lors de la recherche</li>
+         </ul><br>
+
+        <div id="joke-div">
+            <a href="index.html">
+                <h1 style="color: blue;">A VOS GRAPHES, PRET, PARTEZ ! </h1>
+            </a>
+        </div>
+         
+
+
+    </div>
+    
+</body>
+</html>
