@@ -7,7 +7,5 @@ class Road {
         this._length = _length; //la longueure de la route
         this.firstCityKey = firstCityKey; //la premiere ville qui délimite la route
         this.secondCityKey = secondCityKey; //la deuxieme ville qui delimite la route
-        this.evaporatePheromone = function () {
-        };
     }
 }

@@ -20,22 +20,12 @@ class Ant {
         //Permet aux fourmilles de se deplacer en avant d'un pas 
         this.moveForward = function () {
             var exitSuccess = true;
-            if (this.restCurrentDistance>0) this.restCurrentDistance--;
-            if(this.restCurrentDistance<=0){
-                exitSuccess = this.chooseRoad();
-                if(exitSuccess) this.moveForward();
+            if (this.restCurrentDistance>0) this.restCurrentDistance--; //S'il reste de la distance sur la route que la fourmi est entrain de parcourir alors on avance juste d'un pas 
+            if(this.restCurrentDistance<=0){ //sinon c'est que la fourmi est arrivée au bout de la route est donc il faut qu'il choisisse une route à parcourir
+                exitSuccess = this.chooseRoad();//On lui fait choisir une route 
+                if(exitSuccess) this.moveForward();//Puis on lui fait avancé d'un seul pas sur la route qu'il a choisi
             }
             return exitSuccess;
-        };
-
-
-///////////////////////////////////////////////////////////////////////////////////
-        this.takeFood = function () {
-        };
-
-
-///////////////////////////////////////////////////////////////////////////////////
-        this.dropFood = function () {
         };
 
 
@@ -45,19 +35,19 @@ class Ant {
         this.chooseRoad = function () {
             var currentCityKey = this.getDestinationCityKey();
             var success = true;
-            if(!this.bringFood){ //a l'aller
+            if(!this.bringFood){ //si on est a l'aller (i.e. la fourmi est entrain d'aller chercher la nourriture)
                 this.traveledRoadsKeys.push(this.currentRoadKey); //!
                 this.sumLengthCrossedRoad += this.parentThis.roadsList[this.currentRoadKey]._length;//!
-                this.dropPheromone();
+                this.dropPheromone();//Si on est a l'allé on met à jour le pheromone de la route
                 if(currentCityKey== parentThis.lastCityKey){ //si je suis a la derniere ville
                     this.restCurrentDistance = this.parentThis.roadsList[this.currentRoadKey]._length;
                     this.nbNestReached += 1;
-                    this.parentThis.updateBestPath(this.sumLengthCrossedRoad, this.traveledRoadsKeys, this.AntKey); //!
-                    this.bringFood = true;
+                    this.parentThis.updateBestPath(this.sumLengthCrossedRoad, this.traveledRoadsKeys, this.AntKey); //! On cherche à savoir si le chemin que la fourmi à emprunté est le plus court chemin pour l'enregistré
+                    this.bringFood = true; 
                     this.lastCityVisitedKey = currentCityKey;
 
                 }else{ // si je suis juste sur une quelconque ville 
-                    success = this.selectRoad(currentCityKey); //!
+                    success = this.selectRoad(currentCityKey); //!  je sélectionne une route en me basant sur les phéromones 
                     if(success){
                         this.restCurrentDistance = this.parentThis.roadsList[this.currentRoadKey]._length; //!
                         this.lastCityVisitedKey = currentCityKey;
@@ -67,15 +57,12 @@ class Ant {
             }else{ // au retour
                 if(currentCityKey == this.parentThis.firstCityKey){ //si je suis a la premiere ville
                     this.lastCityVisitedKey = this.parentThis.firstCityKey;
-                    this.startSearch();
+                    this.startSearch();//On recommence la recherche
                 }else{ // si je suis juste sur une quelconque ville 
                     this.traveledRoadsKeys.pop(); //!
                     this.lastCityVisitedKey = currentCityKey;
                     this.currentRoadKey = this.traveledRoadsKeys[this.traveledRoadsKeys.length-1];
                     this.restCurrentDistance = this.parentThis.roadsList[this.currentRoadKey]._length;
-                    //this.dropPheromone(); pas besoin d'appeler dropPheromone au retour
-                    
-
                 }
             }
             return success;
@@ -98,12 +85,13 @@ class Ant {
         //permet a la fourmi de sectionner une route en fonction de ses paramettre alpha beta et de la pheromone des routes possibles
         this.selectRoad = function(endCityKey) {
             var cityKey = endCityKey;
-            var roadsKeysList = this.parentThis.citiesList[cityKey].roadsKeysList
-            roadsKeysList = this.removeTraveledRoads(roadsKeysList);
-            if(roadsKeysList.length>0){
+            var roadsKeysList = this.parentThis.citiesList[cityKey].roadsKeysList //On cherche les differentes routes qu'il est possible d'enprunter à partir de la ville courante
+            roadsKeysList = this.removeTraveledRoads(roadsKeysList); //On supprime les routes déja parcourus pour éviter que la fourmi ne les empruntes
+            if(roadsKeysList.length>0){ //S'il rest au moins une route parmi les routes qu'il est possible de prendre apres suppression des routes déja empruntés
                 var bestRoadKey = roadsKeysList[0];
+                
+                //Ici on choisi au hasard la meilleur route à prendre mais en essayant de favoriser les routes qui ont le plus de phéromones en se basant sur les paramétres de la fourmies (alpha, beta)
                 var randNumber = Math.random();
-                //console.log(this.parentThis);
                 if(randNumber<this.parentThis.q0) 
                     var bestRoadsQte = this.parentThis.roadsList[bestRoadKey].pheromoneQte*Math.pow(1/this.parentThis.roadsList[bestRoadKey]._length, this.beta);
                 else
@@ -124,7 +112,7 @@ class Ant {
 
                 this.currentRoadKey = bestRoadKey;
                 return true;
-            }else{//Certaines fourmies peuvent se perdre lors de la recherche
+            }else{//Certaines fourmies peuvent se perdre lors de la recherche 
                 console.log("fourmie bloque dans une ville n'etant pas connecte a deux routes");
                 return false;
             } 
@@ -135,20 +123,11 @@ class Ant {
 ///////////////////////////////////////////////////////////////////////////////////
         //Cette fontion permet de mettre a jour la pheromone d'une route lors qu'une fourmi la choisi
         this.dropPheromone = function () {
-            //console.log("this.sumLengthCrossedRoad = "+ this.sumLengthCrossedRoad);
             this.parentThis.roadsList[this.currentRoadKey].pheromoneQte += 1/this.sumLengthCrossedRoad;
             //console.log("pheromone de la route "+this.currentRoadKey+" = "+this.parentThis.roadsList[this.currentRoadKey].pheromoneQte);
             
         };
 
-///////////////////////////////////////////////////////////////////////////////////
-        //permet de retourner l'identifiant d'une route
-        this.getRoadId = function(parent, key) {
-            //console.log(parent.roadsList);
-            //console.log(key);
-            return parent.roadsList[key].id;
-            
-        };
 
         //Pertmet de renvoyer la liste des routes possible qu'une fourmi peut empruntée. elle est utilisé lors de l'appel a fonction selectRoad
         this.getDestinationCityKey = function(){
@@ -156,10 +135,10 @@ class Ant {
             var secondCityKeyOfCurrentRoad = this.parentThis.roadsList[this.currentRoadKey].secondCityKey;
             if(firstCityKeyOfCurrentRoad==this.lastCityVisitedKey) return secondCityKeyOfCurrentRoad;
             else if(secondCityKeyOfCurrentRoad==this.lastCityVisitedKey) return firstCityKeyOfCurrentRoad;
-            else alert.log("error in function getCurrentCity");
+            else console.log("error in function getDestinationCityKey");
         };
 
-        //Permet de supprimer la liste des chamins deja parcourus
+        //Permet de supprimer la liste des chemins deja parcourus
         this.removeTraveledRoads = function(roadsKeysList){
             var goodRoadsKeysList = [];
             var indexOfCurrentRoadKey = roadsKeysList.indexOf(this.currentRoadKey);
